@@ -178,6 +178,7 @@ py_gnome/scripts/script_long_island/script_long_island.nc
 py_gnome/scripts/script_long_island/script_long_island_uncertain.nc
 py_gnome/scripts/script_long_island/images/LongIslandSoundMap_anim.gif
 py_gnome/tests/unit_tests/test_outputters/temp_m0.nc
+py_gnome/tests/unit_tests/test_outputters/temp_m1.nc
 py_gnome/tests/unit_tests/test_outputters/output_geojson/geojson_000000.geojson
 py_gnome/tests/unit_tests/test_outputters/output_geojson/geojson_000001.geojson
 py_gnome/tests/unit_tests/test_outputters/output_geojson/geojson_000002.geojson

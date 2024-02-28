@@ -422,7 +422,9 @@ elif sys.platform == "win32":
 
     link_args.append('/MANIFEST')
 
-    include_dirs.append(os.path.join(third_party_dir, 'win32_headers'))
+    # DPZ - stdint.h supplemental header not required for VS versions since 2010.
+    #
+    # include_dirs.append(os.path.join(third_party_dir, 'win32_headers'))
 
     # build our linking arguments
     libdirs.append(netcdf_libs)
