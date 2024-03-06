@@ -15,6 +15,7 @@ from itertools import chain
 import sys
 
 import logging
+import logging.config
 import json
 import warnings
 

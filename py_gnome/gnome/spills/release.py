@@ -1410,7 +1410,7 @@ class InitElemsFromFile(Release):
         self.num_released = self.num_elements
 
 
-def release_from_splot_data(release_time, filename):
+def release_from_splot_data(release_time, filename, default_num_elements=True):
     '''
     Initialize a release object from a text file containing splots.
     The file contains 3 columns with following data:
@@ -1426,5 +1426,11 @@ def release_from_splot_data(release_time, filename):
     # 'loaded data, repeat positions for splots next'
     start_positions = np.repeat(pos, num_per_pos, axis=0)
 
+    # DPZ - added this until splot concept reviewed
+    if default_num_elements:
+        num_elements = 1000
+    else:
+        num_elements = np.sum(num_per_pos)
     return Release(release_time=release_time,
+                   num_elements=num_elements,
                    custom_positions=start_positions)

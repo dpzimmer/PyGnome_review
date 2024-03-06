@@ -4,6 +4,7 @@ Example script to set release from splots, includes diffusion and wind mover
 """
 
 import os
+import math
 from datetime import datetime, timedelta
 
 import numpy as np
@@ -28,11 +29,12 @@ base_dir = os.path.dirname(__file__)
 
 
 def make_model(images_dir):
-    print 'initializing the model'
+    print('initializing the model')
 
-    timestep = timedelta(minutes=15)    # this is already default
     start_time = datetime(2012, 9, 15, 12, 0)
-    model = Model(timestep, start_time)
+    time_step = timedelta(minutes=15)
+    duration = timedelta(hours=18)
+    model = Model(time_step=time_step, start_time=start_time, duration=duration)
 
     # timeseries for wind data. The value is interpolated if time is between
     # the given datapoints
@@ -45,25 +47,30 @@ def make_model(images_dir):
     model.environment += wind
 
     # include a wind mover and random diffusion
-    print 'adding movers'
+    print('adding movers')
     model.movers += [PointWindMover(wind), RandomMover()]
 
     # add particles
-    print 'adding particles'
-    release = release_from_splot_data(start_time,
-                                      'GL.2013267._LE_WHOLELAKE.txt')
-    model.spills += Spill(release)
+    print('adding particles')
+    release = release_from_splot_data(start_time, 'GL.2013267._LE_WHOLELAKE.txt')
+    model.spills += Spill(release=release)
 
     # output data as png images and in netcdf format
-    print 'adding outputters'
+    print('adding outputters')
     netcdf_file = os.path.join(base_dir, 'script_example.nc')
 
-    # ignore renderer for now
-    model.outputters += [Renderer(images_dir=images_dir, size=(800, 800),
-                                  projection_class=GeoProjection),
+    # DPZ
+    lon = release.custom_positions[:,0]
+    lat = release.custom_positions[:,1]
+    xmn = math.floor(np.min(lon) - 0.5)
+    xmx = math.ceil( np.max(lon) + 0.5)
+    ymn = math.floor(np.min(lat) - 0.5)
+    ymx = math.ceil( np.max(lat) + 0.5)
+    viewport = ((xmn, ymn), (xmx, ymx))
+    model.outputters += [Renderer(output_dir=images_dir, size=(800, 800), projection_class=GeoProjection, viewport=viewport),
                          NetCDFOutput(netcdf_file)]
 
-    print 'model complete'
+    print('model complete')
     return model
 
 

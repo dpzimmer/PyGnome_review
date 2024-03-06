@@ -282,3 +282,8 @@ py_gnome/tests/unit_tests/test_environment/sample_data/currents/tbofs_example.nc
 py_gnome/tests/unit_tests/test_outputters/output_shape/multi_timesteps.zip
 py_gnome/tests/unit_tests/test_outputters/output_shape/multi_timesteps_uncert.zip
 
+# rename documenation=>documentation one day
+
+documenation/script_splots/images/
+documenation/script_splots/logfile.log
+documenation/script_splots/script_example.nc
